@@ -1,0 +1,30 @@
+#ext-div{
+    color: white;
+    font-weight: bold;
+    flex-basis: 100%;
+    position: absolute;
+    bottom: 1em;
+    left: 3em;
+    display: flex;
+    gap: 1.5em;
+}
+
+.critic-logo{
+    width: 3em;
+}
+
+#rt-logo{
+    width: 4em;
+}
+
+.critic-div{
+    display: flex;
+    gap: 0.4em;
+}
+
+.critic-score{
+    font-size: 1.1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

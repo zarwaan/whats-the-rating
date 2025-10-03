@@ -1,0 +1,51 @@
+{
+	"manifest_version": 3,
+	"name": "What's the rating",
+	"version": "1.0",
+	"description": "An extension to display IMDB rating and rotten tomatoes score of selected title in the Netflix web application.",
+	"permissions": [
+		"activeTab"
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"https://www.netflix.com/*"
+			],
+			"js": [
+				"content.js"
+			],
+			"css": [
+				"content.css"
+			]
+		}
+	],
+	"action": {
+		"default_popup": "popup.html",
+		"default_icon": {
+			"16": "assets/icons/v2/popcorn16.png",
+			"32": "assets/icons/v2/popcorn32.png",
+			"48": "assets/icons/v2/popcorn48.png",
+			"64": "assets/icons/v2/popcorn64.png",
+			"96": "assets/icons/v2/popcorn96.png",
+			"128": "assets/icons/v2/popcorn128.png"
+		}
+	},
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"assets/images/*"
+			],
+			"matches": [
+				"<all_urls>"
+			]
+		}
+	],
+	"icons": {
+		"16": "assets/icons/v2/popcorn16.png",
+		"32": "assets/icons/v2/popcorn32.png",
+		"48": "assets/icons/v2/popcorn48.png",
+		"64": "assets/icons/v2/popcorn64.png",
+		"96": "assets/icons/v2/popcorn96.png",
+		"128": "assets/icons/v2/popcorn128.png"
+	}
+}
