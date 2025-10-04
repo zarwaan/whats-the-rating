@@ -3,10 +3,21 @@ const rtImgSrc = chrome.runtime.getURL("assets/images/rt.svg")
 
 const titleEl = document.querySelector("title");
 
-function makeContent() {
+async function makeContent() {
     const mediaName = document.querySelector("h3.previewModal--section-header strong").textContent;
     const mediaYear = document.querySelector("div.videoMetadata--line div.year").textContent;
-    console.log(mediaName+' '+mediaYear)
+    const params = {};
+    console.log(mediaName)
+    params.t = mediaName;
+    if(!document.querySelector("div.videoMetadata--line span.duration")?.textContent.toLowerCase().includes("season"))
+    {
+        console.log(mediaYear)
+        params.y = mediaYear
+    }    
+    const manifest = chrome.runtime.getManifest();
+    const devMode = !('update_url' in manifest)
+    const url = new URL(devMode ? "http://localhost:3000/api/omdb?" : "");
+    Object.entries(params).forEach(([k,v]) => url.searchParams.append(k,v));
 
     const extDiv = document.createElement("div");
     extDiv.id = "ext-div";
@@ -43,8 +54,19 @@ function makeContent() {
     });
     rtDiv.appendChild(rtImg);
 
-    imdbScore.textContent = "10.0";
-    rtScore.textContent = "100%";
+    imdbScore.textContent = "N/A";
+    rtScore.textContent = "N/A";
+
+    try {
+        const response = await fetch(url.toString(),{method: 'GET'});
+        const result = await response.json();
+        if(response.ok){
+            imdbScore.textContent = result.imdbRating;
+            rtScore.textContent = result.rtScore;
+        }
+    } catch (error) {
+        console.error(error)
+    }
 
     imdbDiv.appendChild(imdbScore);
     rtDiv.appendChild(rtScore);
@@ -55,30 +77,26 @@ function makeContent() {
     return extDiv;
 }
 
-function runExtension() {
+async function runExtension() {
     const cont = document.querySelector("div.previewModal--player-titleTreatmentWrapper");
     if (cont && !cont.querySelector("#ext-div")) {
-        cont.appendChild(makeContent());
+        cont.appendChild(await makeContent());
     }
 }
 
-function handleChange() {
+async function handleChange() {
     const url = location.href;
-    if (url.includes("/browse?jbv=") || url.includes("/title/")) {
-        runExtension();
+    if (url.includes("jbv=") || url.includes("/title/")) {
+        await runExtension();
     }
 }
 
 let lastUrl = location.href;
-new MutationObserver(() => {
+new MutationObserver(async () => {
     if (location.href !== lastUrl) {
         lastUrl = location.href;
-        handleChange();
+        await handleChange();
     }
 }).observe(document, { subtree: true, childList: true });
-
-if (titleEl) {
-    new MutationObserver(handleChange).observe(titleEl, { childList: true });
-}
 
 handleChange();
