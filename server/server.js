@@ -4,6 +4,9 @@ import cors from 'cors';
 
 const app = express();
 app.use(express.json());
+app.use(cors({
+    origin: '*',
+}));
 
 const NODE_ENV = process.env.NODE_ENV || "development";
 dotenv.config({path: `.env.${NODE_ENV}`});
@@ -27,7 +30,17 @@ app.get('/api/omdb',async (req,res) => {
 	}).toString();
 
 	const fetchUrl = `https://www.omdbapi.com/?${query}`;
-	return res.status(200).json('yay');
+	const response = await fetch(fetchUrl,{method: 'GET'});
+	const result = await response.json();
+	const imdbRating = result.imdbRating || 
+						result.Ratings?.find(r => r.Source === "Internet Movie Database")?.Value.split('/')[0] ||
+						"N/A";
+	const rtScore = result.Ratings?.find(r => r.Source === "Rotten Tomatoes")?.Value || "N/A";
+	return res.status(200).json({
+		success: true,
+		imdbRating,
+		rtScore
+	});
 })
 
 app.listen(PORT, () => console.log(`Server running in ${NODE_ENV} mode`))
