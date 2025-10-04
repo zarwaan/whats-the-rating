@@ -5,6 +5,8 @@ const titleEl = document.querySelector("title");
 
 function makeContent() {
     const mediaName = document.querySelector("h3.previewModal--section-header strong").textContent;
+    const mediaYear = document.querySelector("div.videoMetadata--line div.year").textContent;
+    console.log(mediaName+' '+mediaYear)
 
     const extDiv = document.createElement("div");
     extDiv.id = "ext-div";
