@@ -8,14 +8,13 @@ app.use(cors({
     origin: 'https://www.netflix.com',
 }));
 
-const NODE_ENV = process.env.NODE_ENV || "development";
-dotenv.config({path: `.env.${NODE_ENV}`});
+dotenv.config();
 
 const PORT = process.env.PORT || "3000";
 
 const apikey = process.env.OMDB_API_KEY;
 
-app.get('/',(req,res) => res.send(`Server running in ${NODE_ENV} mode`));
+app.get('/',(req,res) => res.send(`Server running!`));
 
 app.get('/api/omdb',async (req,res) => {
 	if(!apikey) return res.status(401).json({
@@ -45,4 +44,4 @@ app.get('/api/omdb',async (req,res) => {
 	});
 })
 
-app.listen(PORT, () => console.log(`Server running in ${NODE_ENV} mode`))
+app.listen(PORT, () => console.log(`Server running!`))
