@@ -5,7 +5,7 @@ import cors from 'cors';
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: '*',
+    origin: 'https://www.netflix.com',
 }));
 
 const NODE_ENV = process.env.NODE_ENV || "development";
