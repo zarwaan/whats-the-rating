@@ -2,7 +2,7 @@
 	"manifest_version": 3,
 	"name": "What's the rating",
 	"version": "1.0",
-	"description": "An extension to display IMDB rating and rotten tomatoes score of selected title in the Netflix web application. Facilitated by the OMDb API.",
+	"description": "An extension to display IMDB rating, rotten tomatoes score and metacrtic score of selected title in the Netflix web application. Facilitated by the OMDb API.",
 	"permissions": [
 		"activeTab"
 	],

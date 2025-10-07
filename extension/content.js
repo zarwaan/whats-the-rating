@@ -1,5 +1,6 @@
 const imdbImgSrc = chrome.runtime.getURL("assets/images/imdb.svg")
 const rtImgSrc = chrome.runtime.getURL("assets/images/rt.svg")
+const metaImgSrc = chrome.runtime.getURL("assets/images/metacritic2.svg")
 
 const titleEl = document.querySelector("title");
 
@@ -32,6 +33,11 @@ async function makeContent() {
         "id": "rt-logo",
         "src": rtImgSrc
     })
+    const metaImg = Object.assign(document.createElement("img"),{
+        "className": "critic-logo",
+        "id": "mc-logo",
+        "src": metaImgSrc
+    })
 
     const imdbScore = Object.assign(document.createElement("div"),{
         "className": "critic-score",
@@ -40,6 +46,10 @@ async function makeContent() {
     const rtScore = Object.assign(document.createElement("div"),{
         "className": "critic-score",
         "id": "rt-score"
+    })
+    const metaScore = Object.assign(document.createElement("div"),{
+        "className": "critic-score",
+        "id": "mc-score"
     })
 
     const imdbDiv = Object.assign(document.createElement('div'),{
@@ -54,8 +64,15 @@ async function makeContent() {
     });
     rtDiv.appendChild(rtImg);
 
+    const mcDiv = Object.assign(document.createElement('div'),{
+        "className": 'critic-div',
+        "id": 'mc-div' 
+    });
+    mcDiv.appendChild(metaImg);
+
     imdbScore.textContent = "N/A";
     rtScore.textContent = "N/A";
+    metaScore.textContent = "N/A";
 
     try {
         const response = await fetch(url.toString(),{method: 'GET'});
@@ -63,6 +80,7 @@ async function makeContent() {
         if(response.ok){
             imdbScore.textContent = result.imdbRating;
             rtScore.textContent = result.rtScore;
+            metaScore.textContent = result.metaScore;
         }
     } catch (error) {
         console.error(error)
@@ -70,9 +88,11 @@ async function makeContent() {
 
     imdbDiv.appendChild(imdbScore);
     rtDiv.appendChild(rtScore);
+    mcDiv.appendChild(metaScore);
 
     extDiv.appendChild(imdbDiv);
     extDiv.appendChild(rtDiv);
+    extDiv.appendChild(mcDiv);
 
     return extDiv;
 }

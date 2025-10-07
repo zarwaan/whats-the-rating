@@ -36,10 +36,12 @@ app.get('/api/omdb',async (req,res) => {
 						result.Ratings?.find(r => r.Source === "Internet Movie Database")?.Value.split('/')[0] ||
 						"N/A";
 	const rtScore = result.Ratings?.find(r => r.Source === "Rotten Tomatoes")?.Value || "N/A";
+	const metaScore = result.Ratings?.find(r => r.Source === "Metacritic")?.Value.split('/')[0] || "N/A";
 	return res.status(200).json({
 		success: true,
 		imdbRating,
-		rtScore
+		rtScore,
+		metaScore
 	});
 })
 

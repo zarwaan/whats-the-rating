@@ -1,7 +1,7 @@
 # 🧩 What's the rating
 
 ## 🔎 Overview
-An extension to display IMDB rating and rotten tomatoes score of selected title in the Netflix web application.\
+An extension to display IMDB rating, rotten tomatoes score and metacritic score of selected title in the Netflix web application.\
 Facilitated by the [OMDb API](https://www.omdbapi.com/).
 
 ## ⚒️ Tech Stack

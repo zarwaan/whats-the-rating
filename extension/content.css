@@ -17,6 +17,11 @@
     width: 4em;
 }
 
+#mc-logo{
+    width: 6em;
+    margin-top: 0.1em;
+}
+
 .critic-div{
     display: flex;
     gap: 0.4em;
